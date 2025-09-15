@@ -1,0 +1,41 @@
+import Input from './Input';
+import Button from './Button';
+
+function AddGame({ game, setGame, onAddGameSubmit }: any) {
+  return (
+    <div className="space-y-4 p-6 bg-blue-200 rounded-md shadow flex flex-col">
+      <Input
+        type="text"
+        placeholder="Digite o título do jogo"
+        value={game.title}
+        onChange={(e: any) => setGame({ ...game, title: e.target.value })}
+      />
+      <Input
+        type="text"
+        placeholder="Digite o gênero do jogo"
+        value={game.genre}
+        onChange={(e: any) => setGame({ ...game, genre: e.target.value })}
+      />
+      <Input
+        type="text"
+        placeholder="Digite a plataforma do jogo"
+        value={game.platform}
+        onChange={(e: any) => setGame({ ...game, platform: e.target.value })}
+      />
+      <select
+        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        value={game.status}
+        onChange={(e: any) => setGame({ ...game, status: e.target.value })}>
+        <option value="" disabled>
+          Selecione o status
+        </option>
+        <option value="jogando">Jogando</option>
+        <option value="zerado">Zerado</option>
+        <option value="wishlist">Lista de Desejos</option>
+      </select>
+      <Button onClick={onAddGameSubmit}>Adicionar Jogo</Button>
+    </div>
+  );
+}
+
+export default AddGame;

@@ -15,6 +15,7 @@ const gameSchema = new mongoose.Schema(
       enum: ['jogando', 'zerado', 'wishlist'],
       default: 'jogando',
     },
+    capa: 
     objetivos: [objectiveSchema],
   },
   { timestamps: true }
