@@ -33,6 +33,26 @@ function AddGame({ game, setGame, onAddGameSubmit }: any) {
         <option value="zerado">Zerado</option>
         <option value="wishlist">Lista de Desejos</option>
       </select>
+      <div className="flex flex-row">
+        <Input
+          type="file"
+          accept="image/*"
+          name="capa"
+          onChange={(e: any) => {
+            const file = e.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                setGame((prevGame: any) => ({
+                  ...prevGame,
+                  image: reader.result,
+                }));
+              };
+              reader.readAsDataURL(file);
+            }
+          }}
+        />
+      </div>
       <Button onClick={onAddGameSubmit}>Adicionar Jogo</Button>
     </div>
   );

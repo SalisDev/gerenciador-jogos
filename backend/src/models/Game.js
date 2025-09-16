@@ -7,6 +7,9 @@ const objectiveSchema = new mongoose.Schema({
 
 const gameSchema = new mongoose.Schema(
   {
+    // Novo ID que vem do front
+    id: { type: String, required: true, unique: true },
+
     titulo: { type: String, required: true },
     genero: { type: String },
     plataforma: { type: String },
@@ -16,6 +19,9 @@ const gameSchema = new mongoose.Schema(
       default: 'jogando',
     },
     objetivos: [objectiveSchema],
+
+    // Nova capa do jogo em base64
+    image: { type: String },
   },
   { timestamps: true }
 );

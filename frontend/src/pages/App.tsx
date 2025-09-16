@@ -12,22 +12,26 @@ type Game = {
 
 function App() {
   // Estado para armazenar os valores do formulário (um único jogo)
-  const [game, setGame] = useState({
-    title: '', // título do jogo
-    genre: '', // gênero do jogo
-    platform: '', // plataforma do jogo
-    status: '', // status do jogo (ex: novo, usado)
+  const [game, setGame] = useState<Game>({
+    title: '',
+    genre: '',
+    platform: '',
+    status: '',
+    image: '',
   });
-
   // Estado para armazenar a lista de jogos adicionados
-  const [games, setGames] = useState<
-    { title: string; genre: string; platform: string; status: string }[]
-  >([]); // inicialmente vazio
+  const [games, setGames] = useState<Game[]>([]);
 
   // Função chamada ao enviar o formulário de adicionar jogo
   const onAddGameSubmit = () => {
     // Validação: se algum campo estiver vazio, exibe alerta e não adiciona
-    if (!game.title || !game.genre || !game.platform || !game.status) {
+    if (
+      !game.title ||
+      !game.genre ||
+      !game.platform ||
+      !game.status ||
+      !game.image
+    ) {
       return alert('Por favor, preencha todos os campos.');
     }
 
@@ -43,11 +47,14 @@ function App() {
       genre: '',
       platform: '',
       status: '',
+      image: '',
     });
 
     // Mensagem de confirmação
     alert('Jogo adicionado com sucesso!');
   };
+  // Função de deletar jogo
+  // função de editar os jogos
 
   return (
     // Container principal da aplicação, ocupando toda a tela

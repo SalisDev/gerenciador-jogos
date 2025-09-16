@@ -12,7 +12,20 @@ const checkGameExists = (game, res) => {
 // Criar um jogo
 export const createGame = async (req, res) => {
   try {
-    const game = new Game(req.body);
+    const { id, titulo, genero, plataforma, status, objetivos, image } =
+      req.body;
+
+    // Cria um novo jogo com o id gerado no front e a imagem em base64
+    const game = new Game({
+      id,
+      titulo,
+      genero,
+      plataforma,
+      status,
+      objetivos,
+      image,
+    });
+
     await game.save();
     res.status(201).json(game);
   } catch (error) {
@@ -30,10 +43,10 @@ export const getGames = async (req, res) => {
   }
 };
 
-// Obter um jogo por ID
+// Obter um jogo por ID (id gerado no front, não o _id do Mongo)
 export const getGameById = async (req, res) => {
   try {
-    const game = await Game.findById(req.params.id);
+    const game = await Game.findOne({ id: req.params.id }); // <--- busca pelo id do front
     if (!checkGameExists(game, res)) return;
     res.json(game);
   } catch (error) {
@@ -41,12 +54,14 @@ export const getGameById = async (req, res) => {
   }
 };
 
-// Atualizar um jogo por ID
+// Atualizar um jogo por ID (id gerado no front)
 export const updateGame = async (req, res) => {
   try {
-    const game = await Game.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const game = await Game.findOneAndUpdate(
+      { id: req.params.id }, // <--- busca pelo id do front
+      req.body,
+      { new: true } // retorna o objeto já atualizado
+    );
     if (!checkGameExists(game, res)) return;
     res.json(game);
   } catch (error) {
@@ -54,10 +69,10 @@ export const updateGame = async (req, res) => {
   }
 };
 
-// Deletar um jogo por ID
+// Deletar um jogo por ID (id gerado no front)
 export const deleteGame = async (req, res) => {
   try {
-    const game = await Game.findByIdAndDelete(req.params.id);
+    const game = await Game.findOneAndDelete({ id: req.params.id }); // <--- busca pelo id do front
     if (!checkGameExists(game, res)) return;
     res.json({ message: 'Jogo deletado com sucesso' });
   } catch (error) {
