@@ -12,7 +12,7 @@ function GameList(props: any) {
             className="flex justify-between items-start bg-white p-4 rounded-md shadow">
             <div className="flex gap-4">
               <img
-                src="https://store-images.s-microsoft.com/image/apps.20679.13847644057609868.a4a91f76-8d1c-4e19-aa78-f4d27d2818fb.a9c33280-e038-4151-8002-79d0794f308d?q=90&w=177&h=265"
+                src={game.image}
                 alt="capa"
                 className="w-24 h-32 object-cover rounded"
               />

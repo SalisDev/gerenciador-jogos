@@ -2,6 +2,14 @@ import { useState } from 'react';
 import AddGame from '../components/AddGame';
 import GameList from '../components/GameList';
 
+type Game = {
+  title: string;
+  genre: string;
+  platform: string;
+  status: string;
+  image: string; // base64
+};
+
 function App() {
   // Estado para armazenar os valores do formulário (um único jogo)
   const [game, setGame] = useState({
