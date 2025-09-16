@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import AddGame from '../components/AddGame';
 import GameList from '../components/GameList';
+import { v4 } from 'uuid';
 
 type Game = {
+  id: string | number;
   title: string;
   genre: string;
   platform: string;
@@ -13,6 +15,7 @@ type Game = {
 function App() {
   // Estado para armazenar os valores do formulário (um único jogo)
   const [game, setGame] = useState<Game>({
+    id: v4(),
     title: '',
     genre: '',
     platform: '',
@@ -43,6 +46,7 @@ function App() {
 
     // Limpa os campos do formulário para o próximo cadastro
     setGame({
+      id: v4(),
       title: '',
       genre: '',
       platform: '',

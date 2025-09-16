@@ -10,8 +10,6 @@
     "preview": "vite preview",
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch"
-
-
   },
   "dependencies": {
     "@tanstack/react-query": "^5.87.4",
@@ -20,7 +18,8 @@
     "axios": "^1.11.0",
     "lucide-react": "^0.544.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
