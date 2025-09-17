@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddGame from '../components/AddGame';
 import GameList from '../components/GameList';
 import { v4 } from 'uuid';
+import { api } from '../services/api';
 
 type Game = {
   id: string | number;
@@ -22,12 +23,28 @@ function App() {
     status: '',
     image: '',
   });
+
   // Estado para armazenar a lista de jogos adicionados
   const [games, setGames] = useState<Game[]>([]);
 
-  // Função chamada ao enviar o formulário de adicionar jogo
-  const onAddGameSubmit = () => {
-    // Validação: se algum campo estiver vazio, exibe alerta e não adiciona
+  // Carrega a lista do banco na montagem do componente
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const res = await api.get('/games');
+        setGames(res.data);
+      } catch (e: any) {
+        console.error(e);
+        alert('Falha ao carregar jogos do servidor.');
+      }
+    };
+
+    fetchGames();
+  }, []);
+
+  // Função de adicionar jogo
+  const onAddGameSubmit = async () => {
+    //Validação dos campos
     if (
       !game.title ||
       !game.genre ||
@@ -38,27 +55,45 @@ function App() {
       return alert('Por favor, preencha todos os campos.');
     }
 
-    // Cria um novo objeto de jogo com os valores do formulário
-    const newGame = { ...game };
+    try {
+      //Envia para o backend
+      const response = await api.post('/games', game);
 
-    // Adiciona o novo jogo à lista de jogos
-    setGames([...games, newGame]);
+      //Caso criado com sucesso
+      if (response.status === 201) {
+        const saved = response.data;
 
-    // Limpa os campos do formulário para o próximo cadastro
-    setGame({
-      id: v4(),
-      title: '',
-      genre: '',
-      platform: '',
-      status: '',
-      image: '',
-    });
+        //Atualiza a lista local
+        setGames((prev) => [...prev, saved]);
 
-    // Mensagem de confirmação
-    alert('Jogo adicionado com sucesso!');
+        // Sincroniza com o banco
+        const list = await api.get('/games');
+        setGames(list.data);
+
+        // Reseta o formulário com um novo id
+        setGame({
+          id: v4(),
+          title: '',
+          genre: '',
+          platform: '',
+          status: '',
+          image: '',
+        });
+
+        alert('Jogo adicionado com sucesso!');
+      } else {
+        alert('Falha ao adicionar.');
+      }
+    } catch (error: any) {
+      // Caso de erro
+      const msg =
+        error.response?.data?.message || error.message || 'Erro desconhecido';
+      alert('Erro ao enviar os dados: ' + msg);
+    }
   };
-  // Função de deletar jogo
+
   // função de editar os jogos
+  // Função de deletar jogo
 
   return (
     // Container principal da aplicação, ocupando toda a tela

@@ -12,17 +12,16 @@ const checkGameExists = (game, res) => {
 // Criar um jogo
 export const createGame = async (req, res) => {
   try {
-    const { id, titulo, genero, plataforma, status, objetivos, image } =
-      req.body;
+    const { id, title, genre, platform, status, objectives, image } = req.body;
 
     // Cria um novo jogo com o id gerado no front e a imagem em base64
     const game = new Game({
       id,
-      titulo,
-      genero,
-      plataforma,
+      title,
+      genre,
+      platform,
       status,
-      objetivos,
+      objectives,
       image,
     });
 
