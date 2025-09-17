@@ -14,7 +14,7 @@ type Game = {
 };
 
 function App() {
-  // Estado para armazenar os valores do formulário (um único jogo)
+  //valores do formulário
   const [game, setGame] = useState<Game>({
     id: v4(),
     title: '',
@@ -24,10 +24,10 @@ function App() {
     image: '',
   });
 
-  // Estado para armazenar a lista de jogos adicionados
+  //lista de jogos adicionados
   const [games, setGames] = useState<Game[]>([]);
 
-  // Carrega a lista do banco na montagem do componente
+  // Carrega a lista o banco
   useEffect(() => {
     const fetchGames = async () => {
       try {
@@ -92,17 +92,18 @@ function App() {
     }
   };
 
-  // função de editar os jogos
   // Função de deletar jogo
+  const onDeleteGame = async () => {};
+  onDeleteGame();
+  // função de editar os jogos
 
   return (
-    // Container principal da aplicação, ocupando toda a tela
     <div className="w-screen h-screen bg-blue-500 flex justify-center p-6">
       <div className="w-[500px] space-y-4">
         <AddGame
-          game={game} // passa os valores do formulário
-          setGame={setGame} // passa a função para atualizar o formulário
-          onAddGameSubmit={onAddGameSubmit} // função para enviar o formulário
+          game={game}
+          setGame={setGame}
+          onAddGameSubmit={onAddGameSubmit}
         />
         <GameList games={games} />
       </div>
