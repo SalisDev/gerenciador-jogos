@@ -1,7 +1,19 @@
+import { useRef } from 'react';
 import Input from './Input';
 import Button from './Button';
 
 function AddGame({ game, setGame, onAddGameSubmit }: any) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleAddGame = () => {
+    onAddGameSubmit(); // adiciona o jogo
+
+    // Limpa o input de arquivo
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   return (
     <div className="space-y-4 p-6 bg-blue-200 rounded-md shadow flex flex-col">
       <Input
@@ -38,6 +50,7 @@ function AddGame({ game, setGame, onAddGameSubmit }: any) {
           type="file"
           accept="image/*"
           name="capa"
+          ref={fileInputRef}
           onChange={(e: any) => {
             const file = e.target.files[0];
             if (file) {
@@ -53,7 +66,7 @@ function AddGame({ game, setGame, onAddGameSubmit }: any) {
           }}
         />
       </div>
-      <Button onClick={onAddGameSubmit}>Adicionar Jogo</Button>
+      <Button onClick={handleAddGame}>Adicionar Jogo</Button>
     </div>
   );
 }
