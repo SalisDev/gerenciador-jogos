@@ -1,11 +1,4 @@
-type Game = {
-  id: string | number;
-  image: string;
-  title: string;
-  genre: string;
-  platform: string;
-  status: string;
-};
+import type { Game } from '../services/useGames';
 
 type GameGameInfoProps = {
   game: Game;

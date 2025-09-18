@@ -1,35 +1,22 @@
 import Button from './Button';
-import { ChevronRightIcon, Trash2Icon } from 'lucide-react';
-import { useNavigate } from '@tanstack/react-router';
-
-type Game = {
-  id: string | number;
-  image: string;
-  title: string;
-  genre: string;
-  platform: string;
-  status: string;
-};
+import { Trash2Icon } from 'lucide-react';
+import type React from 'react';
+import type { Game } from '../services/useGames';
 
 type GameActionsProps = {
   game: Game;
+  children?: React.ReactNode;
   onDelete?: (game: Game) => void;
 };
 
-export default function GameActions({ game, onDelete }: GameActionsProps) {
-  const navigate = useNavigate();
-
+export default function GameActions({
+  game,
+  onDelete,
+  children,
+}: GameActionsProps) {
   return (
     <div className="flex flex-col gap-1">
-      <Button
-        onClick={() =>
-          navigate({
-            to: '/game/$id',
-            params: { id: game.id.toString() },
-          })
-        }>
-        <ChevronRightIcon />
-      </Button>
+      {children}
 
       <Button onClick={() => onDelete?.(game)}>
         <Trash2Icon />
